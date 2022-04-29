@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css?family=Caveat');
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes');
 body {
 margin: 0;
 overflow-x: hidden;
@@ -250,4 +251,64 @@ height: 8vh;
 }
 #karta {
 height: 12vh;
+}
+#czern {
+background-color: Red;
+display: none;
+width: 100vw;
+height: 100vh;
+position: absolute;
+}
+
+/* Slideshow container */
+.slideshow-container {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+background-image: url(img/tlo.png);
+box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);
+}
+
+/* Slides */
+.mySlides {
+  display: none;
+display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5vw;
+  width: 400px;
+  height: 500px;
+  text-align: center;
+  font-family: Great Vibes, serif;
+  font-size: 32px;
+  color: rgba(0,0,0,0.5);
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -30px;
+  padding: 16px;
+  color: #888;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  position: absolute;
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
 }

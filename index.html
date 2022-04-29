@@ -14,22 +14,12 @@
 </head>
 <body>
 
-<audio id="audio" src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"></audio>
+<audio id="audio" src="audio/1.ogg"></audio>
 <audio src="audio/1b (1).mp3" id="dialog1"></audio>
-<audio src="audio/2 (1).mp3" id="dialog2"></audio>
-<audio src="audio/3b (1).mp3" id="dialog3"></audio>
-<audio src="audio/4e.mp3" id="dialog4"></audio>
-<audio src="audio/5.mp3" id="dialog5"></audio>
-<audio src="audio/6b.mp3" id="dialog6"></audio>
-<audio src="audio/7b.mp3" id="dialog7"></audio>
-<audio src="audio/8.mp3" id="dialog8"></audio>
-<audio src="audio/9b.mp3" id="dialog9"></audio>
-<audio src="audio/10b.mp3" id="dialog10"></audio>
-<audio src="audio/11.mp3" id="dialog11"></audio>
-<audio src="audio/12b.mp3" id="dialog12"></audio>
-<audio src="audio/13.mp3" id="dialog13"></audio>
-<audio src="audio/14b.mp3" id="dialog14"></audio>
-<audio src="audio/15.mp3" id="dialog15"></audio>
+<audio src="audio/2.ogg" id="dialog2"></audio>
+<audio src="audio/3d.ogg" id="dialog3"></audio>
+<audio src="audio/4d.ogg" id="dialog4"></audio>
+<audio src="audio/5.ogg" id="dialog5"></audio>
 <audio src="audio/tv1.ogg" id="tv1"></audio>
 <audio src="audio/tv2.ogg" id="tv2"></audio>
 <audio src="audio/tv3.ogg" id="tv3"></audio>
@@ -432,7 +422,7 @@ setTimeout(
   var sounds = document.getElementsByTagName('audio');
   for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
 
-        var audio = document.getElementById("dialog3");
+        var audio = document.getElementById("dialog5");
         audio.play();
 audio.onended = function() {
   $("#napisdialog1").css("display", "none");
