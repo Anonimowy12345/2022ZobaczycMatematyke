@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <title>Magiczny świat</title>
+  <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/three.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
+</head>
+<body style="overflow-x: auto; background: rgb(38,38,38);
+background: linear-gradient(180deg, rgba(38,38,38,1) 0%, rgba(38,38,38,1) 100%);
+background-repeat: no-repeat;
+background-attachment: fixed;">
+
+<audio id="audio" src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"></audio>
+<audio id="ksiazka" src="audio/ksiazka.mp3"></audio>
+<audio src="audio/1b (1).mp3" id="dialog1"></audio>
+
+
+
+<div class="slideshow-container">
+
+<div class="mySlides" style="background-color: #a49b84; box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);">
+
+</div>
+
+<div class="mySlides">
+  <p>13 lutego, w 1805 roku w mieście Düren na świat przybył Johann Peter
+Gustav. Jego dziadek pochodził z&nbsp;miasta Richelet, stąd nazwisko, które pochodzi od wyrażenia „Le jeune de Richelet” – „Młody z Richelet”.</p>
+<button onclick="play(1)">Czytaj</button>
+<audio id="audio-1" src="audio/ksiazka/5.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>W wieku dwunastu lat Dirichlet rozwinął swoją pasję do matematyki. Z&nbsp;&nbsp;uwagi na to, że jego rodzina nie była zamożna, zbierał on kieszonkowe, by móc za nie kupić książki matematyczne.</p>
+<button onclick="play(2)">Czytaj</button>
+<audio id="audio-2" src="audio/ksiazka/6b.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>W 1817 roku zaczął uczęszczać do gimanzjum w Bonn, lecz po dwóch latach przeniósł się do gimnazjum jezuickiego w&nbsp;Kolonii.</p>
+<button onclick="play(3)">Czytaj</button>
+<audio id="audio-3" src="audio/ksiazka/8.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>Dirichlet był gotowy do podjęcia studiów. Z&nbsp;&nbsp;uwagi na niezbyt wysoki poziom nauczania w&nbsp;Niemczech, zdecydował się na studia w Paryżu. Wyruszył więc w maju 1822 roku do Francji, niosąc ze sobą „Disquisitiones Arithmeticae” - książkę, którą stale przy sobie trzymał.</p>
+<button onclick="play(4)">Czytaj</button>
+<audio id="audio-4" src="audio/ksiazka/9b.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>W 1823 roku generał Maximilien Foy zatrudnił go jako korepetytora, który uczył jego dzieci języka niemieckiego. Wynagrodzenie pozwoliło Dirichletowi uniezależnić się od wsparcia finansowego rodziców.</p>
+<button onclick="play(5)">Czytaj</button>
+<audio id="audio-5" src="audio/ksiazka/10b.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>Niestety, generał zmarł dwa lata później. Dirichlet od 1827 roku prowadził wykłady we&nbsp;Wrocławiu. Napotkał jednak ten sam problem, który spowodował, że wybrał naukę w&nbsp;Paryżu – poziom uniwersytetu był niski. Dirichlet przeniósł się do Berlina, gdzie został profesorem. Nie był on jednak z&nbsp;tego w pełni zadowolony. Natłok obowiązków, które na niego spadły, ograniczał czas, który mógł poświęcić na badania.</p>
+<button onclick="play(6)">Czytaj</button>
+<audio id="audio-6" src="audio/ksiazka/11.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>W 1829 roku Dirichlet poznał matematyka, Carla Jacobiego. Po pewnym czasie zostali bliskimi przyjaciółmi i wspierali się nawzajem w&nbsp;swoich badaniach. W 1843 roku Jacobi zachorował. Lekarz poradził mu, by wybrał się do Włoch, gdzie będzie mógł dojść do siebie. Dirichlet dołączył do niego w podróży.</p>
+<button onclick="play(7)">Czytaj</button>
+<audio id="audio-7" src="audio/ksiazka/12b.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>W 1855 roku Dirichlet otrzymał stanowisko na uniwersytecie w Getyndze. Dzięki nowej pracy, miał on więcej czasu na badania i&nbsp;mógł nawiązać kontakt z&nbsp;naukowcami nowego pokolenia.</p>
+<button onclick="play(8)">Czytaj</button>
+<audio id="audio-8" src="audio/ksiazka/14b.ogg"></audio>
+</div>
+
+<div class="mySlides">
+  <p>Niestety, nie mógł się nacieszyć nią zbyt długo. Latem 1858 roku, podczas podróży do Szwajcarii, Dirichlet doznał zawału serca. Zmarł 5 maja 1859 roku.</p>
+<button onclick="play(9)">Czytaj</button>
+<audio id="audio-9" src="audio/ksiazka/15.ogg"></audio>
+</div>
+
+<div class="mySlides" style="background-color: #a49b84; box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);">
+
+</div>
+
+<div class="mySlides" style="background-color: #a49b84; box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);">
+
+</div>
+
+<a class="prev" onclick="plusSlides(-1)"><</a>
+<a class="next" onclick="plusSlides(1)">></a>
+
+</div>
+
+<script>
+
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+
+
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+ 
+var audio = document.getElementById("ksiazka");
+        audio.play();
+
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  slides[slideIndex-1].style.display = "flex"; 
+if (slideIndex === 1) {
+document.getElementsByClassName('prev')[0].style.display="none";
+}
+if (slideIndex === 2) {
+document.getElementsByClassName('prev')[0].style.display="block";
+}
+if (slideIndex === 12) {
+document.getElementsByClassName('prev')[0].style.display="none";
+document.getElementsByClassName('next')[0].style.display="none";
+window.location.href = "quiz.html";
+}
+
+
+
+}
+
+
+function play(nr) {
+  var audio = document.getElementById("audio-"+nr);
+  audio.play(); 
+}
+
+
+</script>
+
+</body>
+</html>
