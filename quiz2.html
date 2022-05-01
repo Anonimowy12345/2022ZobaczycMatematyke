@@ -1,0 +1,831 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/three.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/GLTFLoader.js"></script>
+  <script src="js/dat.gui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
+
+</head>
+<body>
+
+<audio id="audio" src="audio/6a.ogg"></audio>
+<audio src="audio/7a.ogg" id="dialog1"></audio>
+<audio src="audio/quiz/9.ogg" id="zle1"></audio>
+<audio src="audio/quiz/10.ogg" id="zle2"></audio>
+<audio src="audio/quiz/11a.ogg" id="zle3"></audio>
+
+  <div id="napisdialog1"></div>
+<div class="pytaniecontainer">
+
+<div id="pytanie1">W którym mieście urodził się Dirichlet?
+<button id="odpowiedz1" onclick="zmniejszUderzono()">Düren</button>
+<button id="odpowiedz2" onclick="randomSound()">Düsseldorf</button>
+<button id="odpowiedz3" onclick="randomSound()">Duisburg</button>
+</div>
+
+<div id="pytanie2">Na co Dirichlet zbierał swoje kieszonkowe?
+<button id="odpowiedz1" onclick="randomSound()">Na zabawki</button>
+<button id="odpowiedz2" onclick="zmniejszUderzono()">Na książki matematyczne</button>
+<button id="odpowiedz3" onclick="randomSound()">Na przybory matematyczne</button>
+</div>
+
+<div id="pytanie3">Którą książkę Dirichlet stale przy sobie trzymał podczas podróży do Francji?
+<button id="odpowiedz1" onclick="zmniejszUderzono2()"><i>Disquisitiones Arithmeticae</i></button>
+<button id="odpowiedz2" onclick="randomSound()"><i>Geometria</i></button>
+<button id="odpowiedz3" onclick="randomSound()"><i>Institutionum calculi integralis</i></button>
+</div>
+
+<div id="pytanie4">Którego języka uczył Dirichlet jako korepetytor?
+<button id="odpowiedz1" onclick="zmniejszUderzono()">niemieckiego</button>
+<button id="odpowiedz2" onclick="randomSound()">francuskiego</button>
+<button id="odpowiedz3" onclick="randomSound()">angielskiego</button>
+</div>
+
+<div id="pytanie5">W którym polskim mieście Dirichlet prowadził wykłady?
+<button id="odpowiedz1" onclick="randomSound()">W Krakowie</button>
+<button id="odpowiedz2" onclick="randomSound()">W Warszawie</button>
+<button id="odpowiedz3" onclick="zmniejszUderzono2()">We Wrocławiu</button>
+</div>
+
+<div id="pytanie6">Jak nazywał się bliski przyjaciel Dirichleta? 
+<button id="odpowiedz1" onclick="randomSound()">Arthur Cayley</button>
+<button id="odpowiedz2" onclick="randomSound()">William Rowan Hamilton</button>
+<button id="odpowiedz3" onclick="zmniejszUderzono()">Carl Jacobi</button>
+</div>
+
+<div id="pytanie7">Jaka była przyczyna śmierci Dirichleta? 
+<button id="odpowiedz1" onclick="zmniejszUderzono2()">Zawał serca</button>
+<button id="odpowiedz2" onclick="randomSound()">Rak płuc</button>
+<button id="odpowiedz3" onclick="randomSound()">Samobójstwo</button>
+</div>
+
+</div>
+
+<script>
+
+mySounds = [ 'zle1', 'zle2', 'zle3' ]
+function randomSound() {
+    var index = Math.floor(Math.random() * 1000) % mySounds.length;
+    var id = mySounds[index];
+    var audioElement = document.getElementById(id);
+    audioElement.play();
+}
+
+
+let INTERSECTED;
+var bboxComputed = false;
+var uderzono = 0;
+
+
+    var scene = new THREE.Scene( );
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.set(-0.5951494725047812, 1.750424721085777, 1.969875460328348);
+
+
+
+    var renderer = new THREE.WebGLRenderer( {antialias:false, alpha:false} );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.BasicShadowMap;
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    document.body.appendChild( renderer.domElement );
+    
+    window.addEventListener( 'resize', function( )
+    {
+    	var width = window.innerWidth;
+        var height = window.innerHeight;
+	renderer.setSize( width, height );
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix( );
+    } );
+
+
+    var controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.mouseButtons = {
+	LEFT: THREE.MOUSE.PAN,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	RIGHT: THREE.MOUSE.ROTATE
+}
+controls.enablePan = true;
+controls.enableZoom = false;
+controls.maxDistance = 0.001;
+controls.enableDamping = true;
+controls.target.set(-0.596137870171704, 1.7502811811606698, 1.9698257980497274);
+
+var modeltest;
+var model2test;
+var model3test;
+var model4test;
+var model5test;
+var model6test;
+var model7test;
+var model8test;
+
+// Instantiate a loader
+const loader = new THREE.GLTFLoader();
+
+loader.load(
+	// resource URL
+	'3dmodels/lodka.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+
+
+gltf.scene.position.x = -4;
+gltf.scene.scale.set(0.7, 0.7, 0.7);
+
+
+
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+
+}
+		
+
+    } );
+		modeltest = gltf.scene;
+		scene.add( modeltest );
+		init();
+		var bboxComputed = true;
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+
+
+
+);
+
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -4;
+                                gltf.scene.position.z = -4;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model2test = gltf.scene;
+		scene.add( model2test );
+		init2();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -1;
+                                gltf.scene.position.z = -12;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model3test = gltf.scene;
+		scene.add( model3test );
+		init3();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -7;
+                                gltf.scene.position.z = -20;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model4test = gltf.scene;
+		scene.add( model4test );
+		init4();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -4;
+                                gltf.scene.position.z = -28;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model5test = gltf.scene;
+		scene.add( model5test );
+		init5();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -7;
+                                gltf.scene.position.z = -36;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model6test = gltf.scene;
+		scene.add( model6test );
+		init6();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -4;
+                                gltf.scene.position.z = -44;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model7test = gltf.scene;
+		scene.add( model7test );
+		init7();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+loader.load(
+	// resource URL
+	'3dmodels/kamien.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+		gltf.scene.position.x = -7;
+                                gltf.scene.position.z = -52;
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+}
+		
+
+    } );
+
+
+
+		model8test = gltf.scene;
+		scene.add( model8test );
+		init8();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+);
+
+const geometry2 = new THREE.PlaneGeometry( 1000, 1000);
+const material2 = new THREE.MeshStandardMaterial( {color: 0x000000, side: THREE.DoubleSide} );
+const plane2 = new THREE.Mesh( geometry2, material2 );
+plane2.position.set(-0.035, -0.066, 0);
+plane2.rotation.x = 3*Math.PI/2;
+scene.add( plane2 );
+
+const geometry = new THREE.BoxGeometry( 1000, 1, 1 );
+const material = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide, transparent: true, opacity: 0.0} );
+const cube = new THREE.Mesh( geometry, material );
+cube.position.x = -4;
+cube.position.z = -60;
+scene.add( cube );
+
+     //light
+
+const light2 = new THREE.PointLight( 0xFDD081, 40, 15, 7 );
+light2.position.set( -4, 1, -0.5 );
+scene.add( light2 );
+
+
+
+
+
+const cube1BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube2BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube3BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube4BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube5BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube6BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube7BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube8BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+const cube9BB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+
+cube9BB.setFromObject(cube);
+
+function init() {
+
+animate();
+
+function animate() {
+cube1BB.setFromObject(modeltest);
+//console.log(cube1BB.intersectsBox(cube2BB));
+
+if (cube1BB.intersectsBox(cube2BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie1").css("display", "flex");
+ 
+} else {
+uderzono = 0;
+$(".pytaniecontainer").css("display", "none");
+$("#pytanie1").css("display", "none");
+$("#pytanie2").css("display", "none");
+$("#pytanie3").css("display", "none");
+$("#pytanie4").css("display", "none");
+$("#pytanie5").css("display", "none");
+$("#pytanie6").css("display", "none");
+$("#pytanie7").css("display", "none");
+}
+
+if (cube1BB.intersectsBox(cube3BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie2").css("display", "flex");
+ 
+} 
+
+if (cube1BB.intersectsBox(cube4BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie3").css("display", "flex");
+ 
+}
+
+if (cube1BB.intersectsBox(cube5BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie4").css("display", "flex");
+ 
+}
+
+if (cube1BB.intersectsBox(cube6BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie5").css("display", "flex");
+ 
+}
+
+if (cube1BB.intersectsBox(cube7BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie6").css("display", "flex");
+ 
+}
+
+if (cube1BB.intersectsBox(cube8BB)) {
+uderzono = 1;
+$(".pytaniecontainer").css("display", "block");
+$("#pytanie7").css("display", "flex");
+ 
+}
+
+if (cube1BB.intersectsBox(cube9BB)) {
+uderzono = 1;
+window.location.href = "zasada.html";
+}
+
+requestAnimationFrame(animate);
+}
+
+}
+
+function init2() {
+cube2BB.setFromObject(model2test);
+}
+
+function init3() {
+cube3BB.setFromObject(model3test);
+}
+
+function init4() {
+cube4BB.setFromObject(model4test);
+}
+
+function init5() {
+cube5BB.setFromObject(model5test);
+}
+
+function init6() {
+cube6BB.setFromObject(model6test);
+}
+
+function init7() {
+cube7BB.setFromObject(model7test);
+}
+
+function init8() {
+cube8BB.setFromObject(model8test);
+}
+
+//poprzycisku
+function zmniejszUderzono() {
+scene.getObjectByName("Cube", true).position.x -= 4;
+scene.getObjectByName("Cylinder002", true).position.x -= 4;
+scene.getObjectByName("Swiatlo2", true).position.x -= 4;
+light2.position.x -= 2.8;
+}
+
+//poprzycisku
+function zmniejszUderzono2() {
+scene.getObjectByName("Cube", true).position.x += 4;
+scene.getObjectByName("Cylinder002", true).position.x += 4;
+scene.getObjectByName("Swiatlo2", true).position.x += 4;
+light2.position.x += 2.8;
+}
+
+
+//raycaster
+
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerMove( event ) {
+
+	// calculate pointer position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+}
+
+document.addEventListener( 'pointermove', onPointerMove, false );
+
+function render() {
+
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+
+  if(intersects.length > 0) {
+        $('html,body').css('cursor', 'zoom-in');
+    } else {
+        $('html,body').css('cursor', 'default');
+    }
+
+
+
+}
+
+function onClick(event) {
+pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  raycaster.setFromCamera(pointer, camera);
+var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+  if (intersects.length > 0) {
+
+$("#napisdialog1").text("Zobaczmy, dokąd uda mi się dopłynąć...");
+   $("#napisdialog1").css("display", "block");
+
+
+var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("dialog1");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+  raycaster.layers.disableAll();
+controls.enabled = false;
+controls.target.x = -4;
+controls.target.y = 4;
+controls.target.z = -1.5;
+
+camera.position.set(0, 10, 0);
+
+  camera.up.set(0, 0, -1);
+  camera.lookAt(0, 0, 0);
+
+var doprzodu = function () {
+    requestAnimationFrame( doprzodu );
+if (uderzono < 1) {
+scene.getObjectByName("Cube", true).position.z -= 0.08;
+scene.getObjectByName("Cylinder002", true).position.z -= 0.08;
+scene.getObjectByName("Swiatlo2", true).position.z -= 0.08; 
+light2.position.z -= 0.056;
+camera.position.y = 10;
+controls.target.z -= 0.056;
+controls.update();
+renderer.render( scene, camera );
+}
+};
+
+doprzodu();
+
+
+//arrow
+document.onkeydown = function (e) {
+
+if (uderzono < 1) {
+if (e.keyCode === 37) {
+scene.getObjectByName("Cube", true).position.x -= 4;
+scene.getObjectByName("Cylinder002", true).position.x -= 4;
+scene.getObjectByName("Swiatlo2", true).position.x -= 4;
+light2.position.x -= 2.8;
+
+} else
+if (e.keyCode === 39) {
+scene.getObjectByName("Cube", true).position.x += 4;
+scene.getObjectByName("Cylinder002", true).position.x += 4;
+scene.getObjectByName("Swiatlo2", true).position.x += 4;
+light2.position.x += 2.8;
+
+} else
+if (e.keyCode === 65) {
+scene.getObjectByName("Cube", true).position.x -= 4;
+scene.getObjectByName("Cylinder002", true).position.x -= 4;
+scene.getObjectByName("Swiatlo2", true).position.x -= 4;
+light2.position.x -= 2.8;
+
+} else
+if (e.keyCode === 68) {
+scene.getObjectByName("Cube", true).position.x += 4;
+scene.getObjectByName("Cylinder002", true).position.x += 4;
+scene.getObjectByName("Swiatlo2", true).position.x += 4;
+light2.position.x += 2.8;
+
+}
+
+
+
+}
+
+};
+
+
+
+};
+
+  }
+}
+
+
+window.addEventListener( "pointerdown", onClick );
+
+window.requestAnimationFrame(render);
+
+
+
+// game logic
+    var update = function( )
+    {
+    };
+    
+
+
+    // run game loop (update, render, repeat)
+    var GameLoop = function( )
+    {
+      requestAnimationFrame( GameLoop );
+      controls.update();
+      update( );
+      render( );
+      renderer.render( scene, camera );
+      //scene.getObjectByName("Cube", true).position.z -= 0.01;
+      //scene.getObjectByName("Cylinder002", true).position.z -= 0.01;
+      //scene.getObjectByName("Swiatlo2", true).position.z -= 0.01;
+      //light2.position.z -= 0.01;
+      console.log(camera.position);
+      console.log(controls.target);
+      console.log(uderzono);
+    };
+ 
+
+    GameLoop( );
+      window.scene = scene;
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

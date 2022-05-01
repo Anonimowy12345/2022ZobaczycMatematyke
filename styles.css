@@ -268,12 +268,13 @@ top: 50%;
 transform: translate(-50%, -50%);
 background-image: url(img/tlo.png);
 box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);
+
+
 }
 
 /* Slides */
 .mySlides {
   display: none;
-display: flex;
   justify-content: center;
   align-items: center;
   padding: 5vw;
@@ -311,4 +312,59 @@ display: flex;
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
   color: white;
+}
+.przyciskczytaj {
+background-color: transparent;
+font-family: Great Vibes, serif;
+font-weight: 900;
+font-size: 20px;
+color: #573400;
+border: none;
+cursor: pointer;
+outline: none;
+position: absolute;
+bottom: 40px;
+}
+
+.przyciskczytaj:hover {
+color: #875100;
+}
+
+.pytaniecontainer {
+display: none;
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+background-color: White;
+border-radius: 5px;
+padding: 15px;
+color: Black;
+font-size: 20px;
+font-family: Roboto;
+box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 1);
+}
+
+#pytanie1, #pytanie2, #pytanie3, #pytanie4, #pytanie5, #pytanie6, #pytanie7 {
+display: none;
+  justify-content: center;
+  align-items: center;
+width: 850px;
+height: 600px;
+text-align: center;
+}
+
+#odpowiedz1 {
+position: absolute;
+bottom: 40px;
+}
+
+#odpowiedz2 {
+position: absolute;
+bottom: 70px;
+}
+
+#odpowiedz3 {
+position: absolute;
+bottom: 100px;
 }
