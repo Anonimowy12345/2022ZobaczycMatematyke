@@ -522,7 +522,7 @@ flowY: 1
 
 const waterGeometry = new THREE.PlaneGeometry( 20, 20 );
 
-water = new Water( waterGeometry, {
+water = new THREE.Water( waterGeometry, {
 color: params.color,
 scale: params.scale,
 flowDirection: new THREE.Vector2( params.flowX, params.flowY ),
