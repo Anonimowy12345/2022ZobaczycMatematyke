@@ -499,12 +499,12 @@ loader.load(
 	}
 );
 
-//const geometry2 = new THREE.PlaneGeometry( 1000, 1000);
-//const material2 = new THREE.MeshStandardMaterial( {color: 0x000000, side: THREE.DoubleSide} );
-//const plane2 = new THREE.Mesh( geometry2, material2 );
-//plane2.position.set(-0.035, -0.066, 0);
-//plane2.rotation.x = 3*Math.PI/2;
-//scene.add( plane2 );
+const geometry2 = new THREE.PlaneGeometry( 30, 10);
+const material2 = new THREE.MeshStandardMaterial( {color: 0x000000, side: THREE.DoubleSide} );
+const plane2 = new THREE.Mesh( geometry2, material2 );
+plane2.position.set(-5, -0.05, 7);
+plane2.rotation.x = 3*Math.PI/2;
+scene.add( plane2 );
 
 const geometry = new THREE.BoxGeometry( 1000, 1, 1 );
 const material = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide, transparent: true, opacity: 0.0} );
