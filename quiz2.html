@@ -514,7 +514,7 @@ cube.position.z = -60;
 scene.add( cube );
 
 const geometry3 = new THREE.PlaneGeometry( 1000, 1000);
-var textures = new THREE.TextureLoader().load("img/Water.jpg")
+var textures = new THREE.TextureLoader().load("img/water.jpg")
 textures.wrapS = textures.wrapT = THREE.RepeatWrapping;
 textures.repeat.set( 100, 100 );
 const material3 = new THREE.MeshStandardMaterial( {color: 0x002AFF, side: THREE.DoubleSide, normalMap: textures, roughness: 0.5, metalness: 1} );
