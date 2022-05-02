@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/three.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/GLTFLoader.js"></script>
+  <script src="js/dat.gui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
+
+</head>
+<body>
+
+<audio id="audio" src="audio/6a.ogg"></audio>
+<audio src="audio/zobaczymydokadudamisiedoplynac.ogg" id="dialog1"></audio>
+<audio src="audio/quiz/9.ogg" id="zle1"></audio>
+<audio src="audio/quiz/10.ogg" id="zle2"></audio>
+<audio src="audio/quiz/11a.ogg" id="zle3"></audio>
+
+  <div id="napisdialog1"></div>
+
+<script>
+
+let INTERSECTED;
+
+
+    var scene = new THREE.Scene( );
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.set(-0.5951494725047812, 1.750424721085777, 1.969875460328348);
+
+
+
+    var renderer = new THREE.WebGLRenderer( {antialias:false, alpha:false} );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.BasicShadowMap;
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    document.body.appendChild( renderer.domElement );
+    
+    window.addEventListener( 'resize', function( )
+    {
+    	var width = window.innerWidth;
+        var height = window.innerHeight;
+	renderer.setSize( width, height );
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix( );
+    } );
+
+
+    var controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.mouseButtons = {
+	LEFT: THREE.MOUSE.PAN,
+	MIDDLE: THREE.MOUSE.DOLLY,
+	RIGHT: THREE.MOUSE.ROTATE
+}
+controls.enablePan = true;
+controls.enableZoom = false;
+controls.maxDistance = 0.001;
+controls.enableDamping = true;
+controls.target.set(-0.596137870171704, 1.7502811811606698, 1.9698257980497274);
+
+// Instantiate a loader
+const loader = new THREE.GLTFLoader();
+
+loader.load(
+	// resource URL
+	'3dmodels/lodka.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+
+gltf.scene.position.z = 8;
+gltf.scene.scale.set(0.7, 0.7, 0.7);
+
+
+
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+
+}
+		
+
+    } );
+		modeltest = gltf.scene;
+		scene.add( modeltest );
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+
+
+
+);
+
+
+loader.load(
+	// resource URL
+	'3dmodels/regalkamienny.gltf',
+	// called when the resource is loaded
+	function ( gltf ) {
+
+
+//gltf.scene.rotation.y = Math.PI/2;
+//gltf.scene.position.z = -4;
+
+
+
+		
+		gltf.scene.traverse( function( child ) {
+
+        if ( child instanceof THREE.Mesh ) { child.castShadow = true; child.receiveShadow = true;
+
+
+}
+		
+
+    } );
+		modeltest = gltf.scene;
+		scene.add( modeltest );
+		przesunKlejnoty();
+		gltf.animations; // Array<THREE.AnimationClip>
+		gltf.scene; // THREE.Group
+		gltf.scenes; // Array<THREE.Group>
+		gltf.cameras; // Array<THREE.Camera>
+		gltf.asset; // Object
+
+	},
+	// called while loading is progressing
+	function ( xhr ) {
+
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+	},
+	// called when loading has errors
+	function ( error ) {
+
+		console.log( 'An error happened' );
+
+	}
+
+
+
+);
+
+
+function przesunKlejnoty() {
+scene.getObjectByName("Icosphere", true).position.set(-1, 0.25, -2);
+scene.getObjectByName("Icosphere001", true).position.set(-4, 0.25, -5);
+scene.getObjectByName("Icosphere002", true).position.set(4, 0.25, -1);
+scene.getObjectByName("Icosphere003", true).position.set(4, 0.25, -5);
+scene.getObjectByName("Icosphere004", true).position.set(0, 0.25, 2);
+scene.getObjectByName("Icosphere005", true).position.set(4, 0.25, 3);
+scene.getObjectByName("Icosphere006", true).position.set(-7, 0.25, 0);
+scene.getObjectByName("Icosphere007", true).position.set(0, 0.25, 0);
+scene.getObjectByName("Icosphere008", true).position.set(-3, 0.25, 3);
+scene.getObjectByName("Icosphere009", true).position.set(-2.5, 0.25, 0);
+
+const light3 = new THREE.PointLight( 0x00B7FF, 10, 15, 7 );
+scene.add( light3 );
+
+const light4 = new THREE.PointLight( 0xFF00C7, 10, 15, 7 );
+scene.add( light4 );
+
+const light5 = new THREE.PointLight( 0xFF0004, 10, 15, 7 );
+scene.add( light5 );
+
+const light6 = new THREE.PointLight( 0xFFAF00, 10, 15, 7 );
+scene.add( light6 );
+
+const light7 = new THREE.PointLight( 0xF5FF00, 10, 15, 7 );
+scene.add( light7 );
+
+const light8 = new THREE.PointLight( 0xA5FF00, 10, 15, 7 );
+scene.add( light8 );
+
+const light9 = new THREE.PointLight( 0xFFFFFF, 10, 15, 7 );
+scene.add( light9 );
+
+const light10 = new THREE.PointLight( 0x0200FF, 10, 15, 7 );
+scene.add( light10 );
+
+const light11 = new THREE.PointLight( 0xFF0050, 10, 15, 7 );
+scene.add( light11 );
+
+const light12 = new THREE.PointLight( 0x00FFB7, 10, 15, 7 );
+scene.add( light12 );
+
+animate();
+
+function animate() {
+
+light3.position.copy(scene.getObjectByName("Icosphere", true).position);
+light4.position.copy(scene.getObjectByName("Icosphere001", true).position);
+light5.position.copy(scene.getObjectByName("Icosphere002", true).position);
+light6.position.copy(scene.getObjectByName("Icosphere003", true).position);
+light7.position.copy(scene.getObjectByName("Icosphere004", true).position);
+light8.position.copy(scene.getObjectByName("Icosphere005", true).position);
+light9.position.copy(scene.getObjectByName("Icosphere006", true).position);
+light10.position.copy(scene.getObjectByName("Icosphere007", true).position);
+light11.position.copy(scene.getObjectByName("Icosphere008", true).position);
+light12.position.copy(scene.getObjectByName("Icosphere009", true).position);
+
+requestAnimationFrame(animate);
+}
+
+};
+
+const geometry2 = new THREE.PlaneGeometry( 100, 100);
+const material2 = new THREE.MeshStandardMaterial( {color: 0x000000, side: THREE.DoubleSide} );
+const plane2 = new THREE.Mesh( geometry2, material2 );
+plane2.position.set(-5, -0.066, 0);
+plane2.rotation.x = 3*Math.PI/2;
+scene.add( plane2 );
+
+const geometry3 = new THREE.PlaneGeometry( 20, 10);
+var textures = new THREE.TextureLoader().load("img/water.jpg")
+textures.wrapS = textures.wrapT = THREE.RepeatWrapping;
+textures.repeat.set( 2, 1 );
+const material3 = new THREE.MeshStandardMaterial( {color: 0x002AFF, side: THREE.DoubleSide, normalMap: textures, roughness: 0.5, metalness: 1} );
+const plane3 = new THREE.Mesh( geometry3, material3 );
+plane3.position.set(0, -0.05, 11);
+plane3.rotation.x = 3*Math.PI/2;
+scene.add( plane3 );
+
+     //light
+
+const light2 = new THREE.PointLight( 0xFDD081, 40, 15, 7 );
+light2.position.set( 0, 1, 7.5 );
+scene.add( light2 );
+
+
+//raycaster
+
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerMove( event ) {
+
+	// calculate pointer position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+}
+
+document.addEventListener( 'pointermove', onPointerMove, false );
+
+function render() {
+
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+
+  if(intersects.length > 0) {
+        $('html,body').css('cursor', 'zoom-in');
+    } else {
+        $('html,body').css('cursor', 'default');
+    }
+
+
+
+}
+
+function onClick(event) {
+pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  raycaster.setFromCamera(pointer, camera);
+var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+  if (intersects.length > 0) {
+
+$("#napisdialog1").text("Zobaczymy, dokąd uda mi się dopłynąć...");
+   $("#napisdialog1").css("display", "block");
+
+
+var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("dialog1");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+
+}
+
+};
+
+
+
+};
+
+
+window.addEventListener( "pointerdown", onClick );
+
+window.requestAnimationFrame(render);
+
+
+
+// game logic
+    var update = function( )
+    {
+    };
+    
+
+
+    // run game loop (update, render, repeat)
+    var GameLoop = function( )
+    {
+      requestAnimationFrame( GameLoop );
+      controls.update();
+      update( );
+      render( );
+      renderer.render( scene, camera );
+      //scene.getObjectByName("Cube", true).position.z -= 0.01;
+      //scene.getObjectByName("Cylinder002", true).position.z -= 0.01;
+      //scene.getObjectByName("Swiatlo2", true).position.z -= 0.01;
+      //light2.position.z -= 0.01;
+
+      console.log(camera.position);
+      console.log(controls.target);
+    };
+ 
+
+    GameLoop( );
+      window.scene = scene;
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>
