@@ -28,6 +28,11 @@
 
 let INTERSECTED;
 
+var dwaklik = 0;
+
+let pozycjax = [-1.1, 0, 1.1, -1.1, 0, 1.1, -1.1, 0, 1.1];
+let pozycjay = [2.35, 2.35, 2.35, 1.4, 1.4, 1.4, 0.43, 0.43, 0.43];
+
 
     var scene = new THREE.Scene( );
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -173,7 +178,7 @@ scene.getObjectByName("Icosphere", true).position.set(-1, 0.25, -2);
 scene.getObjectByName("Icosphere001", true).position.set(-4, 0.25, -5);
 scene.getObjectByName("Icosphere002", true).position.set(4, 0.25, -1);
 scene.getObjectByName("Icosphere003", true).position.set(4, 0.25, -5);
-scene.getObjectByName("Icosphere004", true).position.set(0, 0.25, 2);
+scene.getObjectByName("Icosphere004", true).position.set(-7.28, 0.25, -4.68);
 scene.getObjectByName("Icosphere005", true).position.set(4, 0.25, 3);
 scene.getObjectByName("Icosphere006", true).position.set(-7, 0.25, 0);
 scene.getObjectByName("Icosphere007", true).position.set(0, 0.25, 0);
@@ -247,6 +252,12 @@ plane3.position.set(0, -0.05, 11);
 plane3.rotation.x = 3*Math.PI/2;
 scene.add( plane3 );
 
+const geometry = new THREE.BoxGeometry( 0.9, 0.9, 0.9 );
+const material = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide, transparent: true, opacity: 0.0} );
+const cube = new THREE.Mesh( geometry, material );
+//cube.position.set(-1, 0.5, -4);
+scene.add( cube );
+
      //light
 
 const light2 = new THREE.PointLight( 0xFDD081, 40, 15, 7 );
@@ -278,7 +289,7 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
-	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+	var intersects = raycaster.intersectObjects([scene.getObjectByName("Icosphere", true), scene.getObjectByName("Icosphere001", true), scene.getObjectByName("Icosphere002", true), scene.getObjectByName("Icosphere003", true), scene.getObjectByName("Icosphere004", true), scene.getObjectByName("Icosphere005", true), scene.getObjectByName("Icosphere006", true), scene.getObjectByName("Icosphere007", true), scene.getObjectByName("Icosphere008", true), scene.getObjectByName("Icosphere009", true)]);
 
   if(intersects.length > 0) {
         $('html,body').css('cursor', 'zoom-in');
@@ -294,31 +305,33 @@ function onClick(event) {
 pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
-var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+var intersects = raycaster.intersectObjects([scene.getObjectByName("Icosphere", true), scene.getObjectByName("Icosphere001", true), scene.getObjectByName("Icosphere002", true), scene.getObjectByName("Icosphere003", true), scene.getObjectByName("Icosphere004", true), scene.getObjectByName("Icosphere005", true), scene.getObjectByName("Icosphere006", true), scene.getObjectByName("Icosphere007", true), scene.getObjectByName("Icosphere008", true), scene.getObjectByName("Icosphere009", true)]);
+
   if (intersects.length > 0) {
 
-$("#napisdialog1").text("Zobaczymy, dokąd uda mi się dopłynąć...");
-   $("#napisdialog1").css("display", "block");
-
-
-var sounds = document.getElementsByTagName('audio');
-  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
-
-        var audio = document.getElementById("dialog1");
-        audio.play();
-audio.onended = function() {
-  $("#napisdialog1").css("display", "none");
-
+//intersects[0].object.position.copy(scene.getObjectByName(randomValueFromArray(["Cube002"]), true).position);
+if (pozycjax.length > 0) {
+intersects[0].object.position.x = pozycjax[0];
+pozycjax.shift();
+intersects[0].object.position.y = pozycjay[0];
+pozycjay.shift();
+intersects[0].object.position.z = -4;
+} else {
+alert("koniec zabawy");
 }
 
-};
 
+
+
+};
 
 
 };
 
 
 window.addEventListener( "pointerdown", onClick );
+
+
 
 window.requestAnimationFrame(render);
 
@@ -343,6 +356,7 @@ window.requestAnimationFrame(render);
       //scene.getObjectByName("Cylinder002", true).position.z -= 0.01;
       //scene.getObjectByName("Swiatlo2", true).position.z -= 0.01;
       //light2.position.z -= 0.01;
+      console.log(dwaklik);
 
       console.log(camera.position);
       console.log(controls.target);
