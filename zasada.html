@@ -45,7 +45,7 @@ var tekstzobaczymy = 0;
 
 let pozycjax = [-1.1, 0, 1.1, -1.1, 0, 1.1, -1.1, 0, 1.1, -1.1, -1.1];
 let pozycjay = [2.35, 2.35, 2.35, 1.4, 1.4, 1.4, 0.43, 0.43, 0.43, 2.35, 2.35];
-
+let pozycjaz = [-5, -5, -5, -5, -5, -5, -5, -5, -5, -4, -4];
 
     var scene = new THREE.Scene( );
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -405,7 +405,8 @@ intersects[0].object.position.x = pozycjax[0];
 pozycjax.shift();
 intersects[0].object.position.y = pozycjay[0];
 pozycjay.shift();
-intersects[0].object.position.z = -4;
+intersects[0].object.position.z = pozycjaz[0];
+pozycjaz.shift();
 
 var klon = intersects[0].object.clone();
 scene.add(klon);
