@@ -757,28 +757,28 @@ doprzodu();
 document.onkeydown = function (e) {
 
 if (uderzono < 1) {
-if (e.keyCode === 37) {
+if (e.keyCode === 37 && scene.getObjectByName("Cube", true).position.x > -1) {
 scene.getObjectByName("Cube", true).position.x -= 4;
 scene.getObjectByName("Cylinder002", true).position.x -= 4;
 scene.getObjectByName("Swiatlo2", true).position.x -= 4;
 light2.position.x -= 2.8;
 
 } else
-if (e.keyCode === 39) {
+if (e.keyCode === 39 && scene.getObjectByName("Cube", true).position.x < 3) {
 scene.getObjectByName("Cube", true).position.x += 4;
 scene.getObjectByName("Cylinder002", true).position.x += 4;
 scene.getObjectByName("Swiatlo2", true).position.x += 4;
 light2.position.x += 2.8;
 
 } else
-if (e.keyCode === 65) {
+if (e.keyCode === 65 && scene.getObjectByName("Cube", true).position.x > -1) {
 scene.getObjectByName("Cube", true).position.x -= 4;
 scene.getObjectByName("Cylinder002", true).position.x -= 4;
 scene.getObjectByName("Swiatlo2", true).position.x -= 4;
 light2.position.x -= 2.8;
 
 } else
-if (e.keyCode === 68) {
+if (e.keyCode === 68 && scene.getObjectByName("Cube", true).position.x < 3) {
 scene.getObjectByName("Cube", true).position.x += 4;
 scene.getObjectByName("Cylinder002", true).position.x += 4;
 scene.getObjectByName("Swiatlo2", true).position.x += 4;

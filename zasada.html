@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="x-ua-compatible" content="IE=edge">
-  <title>Zasada szufladkowa Dirichleta</title>
+  <title>Gra - Klejnoty</title>
   <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
   <script src="js/three.js"></script>
@@ -18,9 +18,7 @@
 
 <audio id="audio" src="audio/6a.ogg"></audio>
 <audio src="audio/zobaczymydokadudamisiedoplynac.ogg" id="dialog1"></audio>
-<audio src="audio/quiz/9.ogg" id="zle1"></audio>
-<audio src="audio/quiz/10.ogg" id="zle2"></audio>
-<audio src="audio/quiz/11a.ogg" id="zle3"></audio>
+<audio src="audio/zobaczymydokadudamisiedoplynac.ogg" id="dialog2"></audio>
 
   <div id="napisdialog1"></div>
 <div class="sterowaniecontainer">
@@ -361,19 +359,19 @@ $(".sterowaniecontainer").css("display", "block");
 }
 
 document.getElementById("wlewo").addEventListener('touchstart', function() {
-  intersects[0].object.position.x -= 0.2;
+  intersects[0].object.position.x -= 0.1;
 });
 
 document.getElementById("wprawo").addEventListener('touchstart', function() {
-  intersects[0].object.position.x += 0.2;
+  intersects[0].object.position.x += 0.1;
 });
 
 document.getElementById("wgore").addEventListener('touchstart', function() {
-  intersects[0].object.position.z -= 0.2;
+  intersects[0].object.position.z -= 0.1;
 });
 
 document.getElementById("wdol").addEventListener('touchstart', function() {
-  intersects[0].object.position.z += 0.2;
+  intersects[0].object.position.z += 0.1;
 });
 
 animate();
@@ -400,6 +398,33 @@ audio.onended = function() {
 zobaczymy += 1;
 };
 
+if (zobaczymy == 11) {
+const geometry4 = new THREE.CircleGeometry( 1, 64 );
+const material4 = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide} );
+const plane4 = new THREE.Mesh( geometry4, material4 );
+plane4.position.set(0, 0, 0);
+plane4.rotation.x = -1*Math.PI/2;
+scene.add( plane4 );
+
+const light13 = new THREE.PointLight( 0xFFFFFF, 100, 2.5, 3 );
+light13.position.set( 0, 0.690, 0 );
+scene.add( light13 );
+
+$("#napisdialog1").text("Kolejny tunel?");
+   $("#napisdialog1").css("display", "block");
+
+
+var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("dialog2");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+  window.location.href = "zasada2.html";
+};
+zobaczymy += 1;
+};
 
 intersects[0].object.position.x = pozycjax[0];
 pozycjax.shift();
@@ -413,19 +438,19 @@ scene.add(klon);
 intersects[0].object.layers.disable( 0 );
 
 document.getElementById("wlewo").addEventListener('touchstart', function() {
-  intersects[0].object.position.x += 0.2;
+  intersects[0].object.position.x += 0.1;
 });
 
 document.getElementById("wprawo").addEventListener('touchstart', function() {
-  intersects[0].object.position.x -= 0.2;
+  intersects[0].object.position.x -= 0.1;
 });
 
 document.getElementById("wgore").addEventListener('touchstart', function() {
-  intersects[0].object.position.z += 0.2;
+  intersects[0].object.position.z += 0.1;
 });
 
 document.getElementById("wdol").addEventListener('touchstart', function() {
-  intersects[0].object.position.z -= 0.2;
+  intersects[0].object.position.z -= 0.1;
 });
 
 //arrow
