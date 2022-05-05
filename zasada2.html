@@ -51,8 +51,7 @@ let INTERSECTED;
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 camera.position.set(-0.5961288167567185, 1.7505097305519024, 1.9707992882712717
-);
-
+); 
 
     var renderer = new THREE.WebGLRenderer( {antialias:false, alpha:false} );
     renderer.shadowMap.enabled = true;
@@ -236,7 +235,7 @@ loader2.load(
    });
    var material = new THREE.MeshBasicMaterial();
    text = new THREE.Mesh(geometry, material);
-   text.position.set(-0.68, 0, -2.5);
+   text.position.set(-0.68, 0.3, -1.7);
    scene.add(text);
  },
 );
@@ -253,7 +252,7 @@ loader2.load(
    var material = new THREE.MeshBasicMaterial();
    dwojkaklon = new THREE.Mesh(geometry, material);
 
-dwojkaklon.position.set(-1.57, 0, -1.78);
+dwojkaklon.position.set(-1.46, 0.3, -0.87);
 scene.add(dwojkaklon);
  },
 );
@@ -269,7 +268,7 @@ loader2.load(
    });
    var material = new THREE.MeshBasicMaterial();
    text2 = new THREE.Mesh(geometry, material);
-   text2.position.set(-1.08, 0, -2.5);
+   text2.position.set(-1, 0.3, -1.75);
    scene.add(text2);
    text2.visible = false;
  },
@@ -286,7 +285,7 @@ loader2.load(
    });
    var material = new THREE.MeshBasicMaterial();
    jedynkaklon = new THREE.Mesh(geometry, material);
-jedynkaklon.position.set(-1.57, 0, -2);
+jedynkaklon.position.set(-1.57, 0.3, -1.2);
 scene.add(jedynkaklon);
    jedynkaklon.visible = false;
  },
@@ -297,13 +296,13 @@ const material4 = new THREE.MeshBasicMaterial( {color: 0xff0000, side: THREE.Dou
 const circle4 = new THREE.Mesh( geometry4, material4 );
 circle4.rotation.x = 3*Math.PI/2;
 circle4.position.x = -1.07;
-circle4.position.y = 0.35;
-circle4.position.z = -1.42;
+circle4.position.y = 0.326;
+circle4.position.z = -1.47;
 circle4.scale.set(0.03, 0.03, 0.03);
 scene.add( circle4 );
 
 var punktklon = circle4.clone();
-punktklon.position.z = -0.5;
+punktklon.position.z = -0.53;
 scene.add(punktklon);
 
 var punktklon2 = circle4.clone();
@@ -312,7 +311,7 @@ scene.add(punktklon2);
 
 var punktklon3 = circle4.clone();
 punktklon3.position.x = -0.13;
-punktklon3.position.z = -0.5;
+punktklon3.position.z = -0.53;
 scene.add(punktklon3);
 
 var punktklon4 = circle4.clone();
@@ -338,7 +337,35 @@ light3.position.set( -0.6, 0.9, -1 );
 //light3.castShadow = true;
 scene.add( light3 );
 
+//arrow
+document.onkeydown = function (e) {
 
+if (e.keyCode === 81 ) {
+controls.target.set(-0.5780167227417596, 2.5719180865010706, -1.2050088567728547);
+camera.position.set(-0.5780277807954722, 3.9744187252008363, -1.1910799199697173);
+controls.enabled = false;
+text.rotation.x = 3*Math.PI/2;
+dwojkaklon.rotation.x = 3*Math.PI/2;
+text2.rotation.x = 3*Math.PI/2;
+jedynkaklon.rotation.x = 3*Math.PI/2;
+} 
+
+}
+
+document.onkeyup = function (e) {
+
+if (e.keyCode === 81 ) {
+controls.target.set(-0.596137870171704, 1.7502811811606698, 1.9698257980497274);
+camera.position.set(-0.5961288167567185, 1.7505097305519024, 1.9707992882712717
+); 
+controls.enabled = true;
+text.rotation.x = 0;
+dwojkaklon.rotation.x = 0;
+text2.rotation.x = 0;
+jedynkaklon.rotation.x = 0;
+} 
+
+}
 
 function myFunction() {
 
