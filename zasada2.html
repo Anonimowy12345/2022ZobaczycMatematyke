@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="x-ua-compatible" content="IE=edge">
-  <title>Magiczny świat</title>
+  <title>Gra - Kwadrat</title>
   <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
   <script src="js/three.js"></script>
@@ -16,14 +16,34 @@
 </head>
 <body>
 
-<audio id="audio" src="audio/6a.ogg"></audio>
-<audio src="audio/7a.ogg" id="dialog1"></audio>
 <audio src="audio/geometria/mlotek.ogg" id="odglosmlotka"></audio>
+<audio src="audio/geometria/30b.ogg" id="okej"></audio>
+<audio src="audio/geometria/44c.ogg" id="szanujmy"></audio>
+<audio src="audio/quiz/11a.ogg" id="zle"></audio>
+<audio src="audio/geometria/43a.ogg" id="teraz"></audio>
+<audio src="audio/geometria/45a.ogg" id="udalo"></audio>
 
   <div id="napisdialog1"></div>
-
+<div class="poledowpisywania">
+<p>Wśród 5 punktów w kwadracie o boku 2 znajdują się dwa odległe o nie więcej niż...</p>
+&#8730;
+<input type="number" id="numb">
+<button id="przyciskpotwierdz" onclick="myFunction()">Potwierdź</button>
+<button id="przyciskwyjdz" onclick="myFunction2()">Wyjdź</button>
+</div>
 
 <script>
+
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+const rndInt = randomIntFromInterval(-43, 43);
+const rndInt2 = randomIntFromInterval(-43, 43);
+console.log(rndInt);
+console.log(rndInt2);
+
+var rozbite = 0;
 
 let INTERSECTED;
 
@@ -148,29 +168,7 @@ gltf.scene.position.x = -0.6;
 	}
 );
 
-var loader2 = new THREE.FontLoader();
 
-loader2.load( 'js/helvetiker_regular.typeface.json', function ( font ) {
-
-    var textGeo = new THREE.TextGeometry( "2", {
-
-        font: font,
-
-        size: 200,
-        height: 50,
-        curveSegments: 12,
-
-    } );
-
-    var textMaterial = new THREE.MeshStandardMaterial( { emissive: 0xffffff, emissiveIntensity: 3, side: THREE.DoubleSide } );
-
-    var mesh = new THREE.Mesh( textGeo, textMaterial );
-    mesh.position.set( -0.68, 0, -2.5 );
-    mesh.scale.set( 0.001, 0.001, 0.001 );
-
-    scene.add( mesh );
-
-} );
 
 const geometry2 = new THREE.PlaneGeometry( 120, 120);
 const material2 = new THREE.MeshStandardMaterial( {color: 0x000000, side: THREE.DoubleSide} );
@@ -178,6 +176,14 @@ const plane2 = new THREE.Mesh( geometry2, material2 );
 plane2.position.set(-0.035, -0.066, 0);
 plane2.rotation.x = 3*Math.PI/2;
 scene.add( plane2 );
+
+const geometry = new THREE.PlaneGeometry( 0.8, 1.9);
+const material = new THREE.MeshStandardMaterial( {emissive: 0xffffff, emissiveIntensity: 10, side: THREE.DoubleSide} ); 
+const plane = new THREE.Mesh( geometry, material );
+plane.position.set(-0.6, 1.95, -6.85);
+plane.scale.set(2.7, 2, 1);
+scene.add( plane );
+plane.visible = false;
 
 const geometry3 = new THREE.BoxGeometry( 1, 0.05, 1 );
 const material3 = new THREE.MeshStandardMaterial( {emissive: 0xff0073, emissiveIntensity: 3, side: THREE.DoubleSide} );
@@ -217,18 +223,193 @@ scene.add(rozbitycube4);
 rozbitycube4.visible = false;
 
 
+var loader2 = new THREE.FontLoader();
+
+let text;
+loader2.load(
+ 'js/helvetiker_regular.typeface.json',
+ function(font) {
+   var geometry = new THREE.TextGeometry('2', {
+     font: font,
+     size: 0.2,
+     height: 0.03,
+   });
+   var material = new THREE.MeshBasicMaterial();
+   text = new THREE.Mesh(geometry, material);
+   text.position.set(-0.68, 0, -2.5);
+   scene.add(text);
+ },
+);
+
+let dwojkaklon
+loader2.load(
+ 'js/helvetiker_regular.typeface.json',
+ function(font) {
+   var geometry = new THREE.TextGeometry('2', {
+     font: font,
+     size: 0.2,
+     height: 0.03,
+   });
+   var material = new THREE.MeshBasicMaterial();
+   dwojkaklon = new THREE.Mesh(geometry, material);
+
+dwojkaklon.position.set(-1.57, 0, -1.78);
+scene.add(dwojkaklon);
+ },
+);
+
+let text2
+loader2.load(
+ 'js/helvetiker_regular.typeface.json',
+ function(font) {
+   var geometry = new THREE.TextGeometry('1', {
+     font: font,
+     size: 0.2,
+     height: 0.03,
+   });
+   var material = new THREE.MeshBasicMaterial();
+   text2 = new THREE.Mesh(geometry, material);
+   text2.position.set(-1.08, 0, -2.5);
+   scene.add(text2);
+   text2.visible = false;
+ },
+);
+
+let jedynkaklon
+loader2.load(
+ 'js/helvetiker_regular.typeface.json',
+ function(font) {
+   var geometry = new THREE.TextGeometry('1', {
+     font: font,
+     size: 0.2,
+     height: 0.03,
+   });
+   var material = new THREE.MeshBasicMaterial();
+   jedynkaklon = new THREE.Mesh(geometry, material);
+jedynkaklon.position.set(-1.57, 0, -2);
+scene.add(jedynkaklon);
+   jedynkaklon.visible = false;
+ },
+);
+
+const geometry4 = new THREE.CircleGeometry( 1, 32 );
+const material4 = new THREE.MeshBasicMaterial( {color: 0xff0000, side: THREE.DoubleSide} ); 
+const circle4 = new THREE.Mesh( geometry4, material4 );
+circle4.rotation.x = 3*Math.PI/2;
+circle4.position.x = -1.07;
+circle4.position.y = 0.35;
+circle4.position.z = -1.42;
+circle4.scale.set(0.03, 0.03, 0.03);
+scene.add( circle4 );
+
+var punktklon = circle4.clone();
+punktklon.position.z = -0.5;
+scene.add(punktklon);
+
+var punktklon2 = circle4.clone();
+punktklon2.position.x = -0.13;
+scene.add(punktklon2);
+
+var punktklon3 = circle4.clone();
+punktklon3.position.x = -0.13;
+punktklon3.position.z = -0.5;
+scene.add(punktklon3);
+
+var punktklon4 = circle4.clone();
+punktklon4.position.x = -0.6;
+
+//punktklon4.position.x += 1;
+
+punktklon4.position.x += rndInt/100;
+punktklon4.position.z = -1;
+
+punktklon4.position.z += rndInt2/100;
+scene.add(punktklon4);
 
      //light
 
 
-const light2 = new THREE.PointLight( 0xFDD081, 40, 5, 7 );
-light2.position.set( 1.251, 1.675, -7.179 );
+const light2 = new THREE.PointLight( 0xff5900, 40, 15, 7 );
+light2.position.set( -0.580, 2.1, -4.83 );
 scene.add( light2 );
 
-const light3 = new THREE.PointLight( 0xff0073, 40, 5, 7 );
-light3.position.set( -0.6, 0.5, -1 );
+const light3 = new THREE.PointLight( 0xff0073, 70, 23, 18 );
+light3.position.set( -0.6, 0.9, -1 );
+//light3.castShadow = true;
 scene.add( light3 );
 
+
+
+function myFunction() {
+
+  // Get the value of the input field with id="numb"
+  let x = document.getElementById("numb").value;
+  // If x is Not a Number or less than one or greater than 10
+  let text;
+  if (isNaN(x) || x == 2) {
+$(".poledowpisywania").css("display", "none");
+    plane.visible = true;
+       $("#napisdialog1").text("Udało się!");
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("udalo");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+window.location.href = "zasada3.html";
+};
+  } 
+  if (isNaN(x) || x <= 0) {
+       $("#napisdialog1").text("Szanujmy się.");
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("szanujmy");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+};
+  }
+
+  if (isNaN(x) || x > 0 && x < 2 || x > 2 && x <= 25) {
+           $("#napisdialog1").text("Źle.");
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("zle");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+};
+  } 
+
+  if (isNaN(x) || x > 25) {
+       $("#napisdialog1").text("Teraz trochę przesadziłam.");
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("teraz");
+        audio.play();
+audio.onended = function() {
+  $("#napisdialog1").css("display", "none");
+};
+  } 
+
+
+}
+
+function myFunction2() {
+$(".poledowpisywania").css("display", "none");
+}
 
 //raycaster
 
@@ -254,7 +435,7 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
-	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube001", true)]);
+	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube001", true), scene.getObjectByName("Cube002", true)]);
 
   if(intersects.length > 0) {
         $('html,body').css('cursor', 'zoom-in');
@@ -273,6 +454,8 @@ pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
   var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube001", true)]);
   if (intersects.length > 0) {
 
+$(".poledowpisywania").css("display", "none");
+
 var klonmlotka = scene.getObjectByName("Cube001", true).clone();
 klonmlotka.scale.set(0.7, 0.7, 0.7);
 klonmlotka.position.x = 2;
@@ -281,6 +464,7 @@ klonmlotka.visible = false;
 
 raycaster.layers.set( 1 );
 scene.getObjectByName("Cube001", true).layers.disable( 1 );
+scene.getObjectByName("Cube002", true).layers.enable( 1 );
 scene.getObjectByName("Cube001", true).visible = false;
 
 
@@ -297,8 +481,47 @@ tl.set(rozbitycube2, { visible: true });
 tl.set(rozbitycube3, { visible: true });
 tl.set(rozbitycube4, { visible: true });
 tl.call(wlaczDzwiek);
+tl.set(text, { visible: false });
+tl.set(dwojkaklon, { visible: false });
+tl.set(text2, { visible: true });
+tl.set(jedynkaklon, { visible: true });
+tl.call(przesunPunkt);
 tl.to(klonmlotka.rotation, { x: 0, z: 0 });
 tl.to(klonmlotka.position, { x: 2, y: 0 });
+
+rozbite += 1;
+
+function przesunPunkt() {
+circle4.position.x -= 0.05;
+circle4.position.z -= 0.05;
+
+punktklon.position.x -= 0.05;
+punktklon.position.z += 0.05;
+
+punktklon2.position.x += 0.05;
+punktklon2.position.z -= 0.05;
+
+punktklon3.position.x += 0.05;
+punktklon3.position.z += 0.05;
+
+if (punktklon4.position.x === -0.6 || punktklon4.position.z === -1) {
+alert("Wystąpił błąd. Odśwież stronę i spróbuj ponownie.")
+}
+
+
+if (punktklon4.position.x > -0.6) {
+punktklon4.position.x += 0.05;
+} else {
+punktklon4.position.x -= 0.05;
+}
+
+if (punktklon4.position.z > -1) {
+punktklon4.position.z += 0.05;
+} else {
+punktklon4.position.z -= 0.05;
+}
+
+}
 
 function wlaczDzwiek() {
 var sounds = document.getElementsByTagName('audio');
@@ -313,7 +536,7 @@ audio.onended = function() {
   var sounds = document.getElementsByTagName('audio');
   for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
 
-        var audio = document.getElementById("audio");
+        var audio = document.getElementById("okej");
         audio.play();
 audio.onended = function() {
   $("#napisdialog1").css("display", "none");
@@ -325,12 +548,19 @@ audio.onended = function() {
 
   }
 
+
+var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube002", true)]);
+ if (intersects.length > 0) {
+$(".poledowpisywania").css("display", "flex");
+}
+
 }
 
 
 window.addEventListener( "pointerdown", onClick );
 
 window.requestAnimationFrame(render);
+
 
 
 // game logic
