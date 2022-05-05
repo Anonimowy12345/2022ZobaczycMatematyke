@@ -20,20 +20,111 @@
 <audio src="audio/geometria/30b.ogg" id="okej"></audio>
 <audio src="audio/geometria/46.ogg" id="ulatwie"></audio>
 <audio src="audio/geometria/44c.ogg" id="szanujmy"></audio>
+<audio src="audio/geometria/31b.ogg" id="twierdzenie"></audio>
+<audio src="audio/geometria/32.ogg" id="niedosc"></audio>
+<audio src="audio/geometria/35.ogg" id="apodniesione"></audio>
+<audio src="audio/geometria/36a.ogg" id="jajuz"></audio>
+<audio src="audio/geometria/37.ogg" id="jedenpodniesione"></audio>
+<audio src="audio/geometria/41.ogg" id="tegojuz"></audio>
 <audio src="audio/quiz/11a.ogg" id="zle"></audio>
 <audio src="audio/geometria/43a.ogg" id="teraz"></audio>
 <audio src="audio/geometria/45a.ogg" id="udalo"></audio>
 
   <div id="napisdialog1"></div>
 <div class="poledowpisywania">
-<p>Wśród 5 punktów w kwadracie o boku 2 znajdują się dwa odległe o nie więcej niż...</p>
+<p>Mamy pewność, że wśród 5 punktów w kwadracie o&nbsp;boku 2 znajdują się dwa odległe o nie więcej niż...</p>
 &#8730;
 <input type="number" id="numb">
 <button id="przyciskpotwierdz" onclick="myFunction()">Potwierdź</button>
 <button id="przyciskwyjdz" onclick="myFunction2()">Wyjdź</button>
 </div>
 
+<div class="podpowiedzcontainer">
+<button id="przyciskpodpowiedz" onclick="zobaczPodpowiedz()">Podpowiedź</button>
+</div>
+
 <script>
+var klikpodpowiedz = 0;
+
+if (klikpodpowiedz == 3) {
+ $("#przyciskpodpowiedz").css("display", "none");
+}
+
+function zobaczPodpowiedz() {
+if (klikpodpowiedz == 0) {
+
+       $("#napisdialog1").html(`<span style="color:#0073ff">Twierdzenie Pitagorasa</span><p>Nie dość, że utknęłam w tym dziwnym świecie, to jeszcze słyszę głosy w głowie…</p>`);
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("twierdzenie");
+        audio.play();
+audio.onended = function() {
+    var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("niedosc");
+        audio.play();
+audio.onended = function() {
+ $("#napisdialog1").css("display", "none");
+klikpodpowiedz += 1;
+}
+};
+
+}
+
+if (klikpodpowiedz == 1) {
+
+       $("#napisdialog1").html(`<span style="color:#0073ff">a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></span><p>Ja już chyba całkiem zwariowałam.</p>`);
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("apodniesione");
+        audio.play();
+audio.onended = function() {
+    var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("jajuz");
+        audio.play();
+audio.onended = function() {
+ $("#napisdialog1").css("display", "none");
+klikpodpowiedz += 1;
+}
+};
+
+}
+
+if (klikpodpowiedz == 2) {
+
+       $("#napisdialog1").html(`<span style="color:#0073ff">1<sup>2</sup> + 1<sup>2</sup></span><p>Tego już za wiele!</p>`);
+   $("#napisdialog1").css("display", "block");
+
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("jedenpodniesione");
+        audio.play();
+audio.onended = function() {
+    var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("tegojuz");
+        audio.play();
+audio.onended = function() {
+ $("#napisdialog1").css("display", "none");
+klikpodpowiedz += 1;
+$("#przyciskpodpowiedz").css("display", "none");
+}
+};
+
+}
+
+}
 
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -542,6 +633,7 @@ tl.set(dwojkaklon, { visible: false });
 tl.set(text2, { visible: true });
 tl.set(jedynkaklon, { visible: true });
 tl.call(przesunPunkt);
+
 tl.to(klonmlotka.rotation, { x: 0, z: 0 });
 tl.to(klonmlotka.position, { x: 2, y: 0 });
 
@@ -603,6 +695,7 @@ audio.onended = function() {
         audio.play();
 audio.onended = function() {
 $("#napisdialog1").css("display", "none"); 
+$("#przyciskpodpowiedz").css("display", "block"); 
 
 if (punktklon4.position.x <= -0.68 && punktklon4.position.z <= -1.08) {
 tl.to(punktklon4.position, { x: -0.68, z: -1.08 });
