@@ -18,6 +18,7 @@
 
 <audio src="audio/geometria/mlotek.ogg" id="odglosmlotka"></audio>
 <audio src="audio/geometria/30b.ogg" id="okej"></audio>
+<audio src="audio/geometria/46.ogg" id="ulatwie"></audio>
 <audio src="audio/geometria/44c.ogg" id="szanujmy"></audio>
 <audio src="audio/quiz/11a.ogg" id="zle"></audio>
 <audio src="audio/geometria/43a.ogg" id="teraz"></audio>
@@ -183,6 +184,34 @@ plane.position.set(-0.6, 1.95, -6.85);
 plane.scale.set(2.7, 2, 1);
 scene.add( plane );
 plane.visible = false;
+
+const geometry5 = new THREE.PlaneGeometry( 0.1, Math.sqrt(2));
+const material5 = new THREE.MeshBasicMaterial( {color: 0x0062ff, side: THREE.DoubleSide, transparent: true, opacity: 0.3} ); 
+const plane5 = new THREE.Mesh( geometry5, material5 );
+plane5.position.set(-0.895, 0.327, -1.3);
+plane5.scale.set(0.46, 0.46, 0.46);
+plane5.rotation.x = Math.PI/2;
+plane5.rotation.z = Math.PI/-4;
+scene.add( plane5 );
+plane5.visible = false;
+
+var plane6 = plane5.clone();
+plane6.position.set(-0.3, 0.327, -1.3);
+plane6.rotation.z = Math.PI/4;
+scene.add(plane6);
+plane6.visible = false;
+
+var plane7 = plane5.clone();
+plane7.position.set(-0.895, 0.327, -0.7);
+plane7.rotation.z = Math.PI/4;
+scene.add(plane7);
+plane7.visible = false;
+
+var plane8 = plane5.clone();
+plane8.position.set(-0.3, 0.327, -0.7);
+plane8.rotation.z = Math.PI/-4;
+scene.add(plane8);
+plane8.visible = false;
 
 const geometry3 = new THREE.BoxGeometry( 1, 0.05, 1 );
 const material3 = new THREE.MeshStandardMaterial( {emissive: 0xff0073, emissiveIntensity: 3, side: THREE.DoubleSide} );
@@ -566,7 +595,37 @@ audio.onended = function() {
         var audio = document.getElementById("okej");
         audio.play();
 audio.onended = function() {
-  $("#napisdialog1").css("display", "none");
+  $("#napisdialog1").text("Ułatwię sobie sprawę...");
+  var sounds = document.getElementsByTagName('audio');
+  for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
+
+        var audio = document.getElementById("ulatwie");
+        audio.play();
+audio.onended = function() {
+$("#napisdialog1").css("display", "none"); 
+
+if (punktklon4.position.x <= -0.68 && punktklon4.position.z <= -1.08) {
+tl.to(punktklon4.position, { x: -0.68, z: -1.08 });
+tl.set(plane5, { visible: true });
+}
+
+if (punktklon4.position.x >= -0.52 && punktklon4.position.z <= -1.08) {
+tl.to(punktklon4.position, { x: -0.52, z: -1.08 });
+tl.set(plane6, { visible: true });
+}
+
+if (punktklon4.position.x <= -0.68 && punktklon4.position.z >= -0.925) {
+tl.to(punktklon4.position, { x: -0.68, z: -0.925 });
+tl.set(plane7, { visible: true });
+}
+
+if (punktklon4.position.x >= -0.52 && punktklon4.position.z >= -0.925) {
+tl.to(punktklon4.position, { x: -0.52, z: -0.925 });
+tl.set(plane8, { visible: true });
+}
+
+}
+
 };
 };
 
