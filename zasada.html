@@ -19,6 +19,11 @@
 <audio src="audio/28.ogg" id="dialog1"></audio>
 <audio src="audio/29.ogg" id="dialog2"></audio>
 
+<div class="samouczek">
+Twoim zadaniem jest przenoszenie klejnotów tak, aby wypełnić nimi wszystkie szufladki. Możesz to zrobić, klikając klejnot, który chcesz przesunąć, a następnie naciskając strzałki lub klawisze W, A, S, D. Zbliżenie obiektu do regału spowoduje automatyczne umieszczenie w szufladzie.
+<button id="przycisksamouczek" onclick="showPage()"><img id="play" src="img/play.png" alt="Graj"></button>
+</div>
+
   <div id="napisdialog1"></div>
 <div class="sterowaniecontainer">
 <div id="wlewo">←</div>
@@ -28,6 +33,13 @@
 </div>
 
 <script>
+
+var kliknietopodpowiedz = 0;
+
+function showPage() {
+$(".samouczek").css("display", "none");
+kliknietopodpowiedz += 1;
+}
 
 function isTouchScreendevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints;      
@@ -308,6 +320,7 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
+if (kliknietopodpowiedz == 1) {
 	var intersects = raycaster.intersectObjects([scene.getObjectByName("Icosphere", true), scene.getObjectByName("Icosphere001", true), scene.getObjectByName("Icosphere002", true), scene.getObjectByName("Icosphere003", true), scene.getObjectByName("Icosphere004", true), scene.getObjectByName("Icosphere005", true), scene.getObjectByName("Icosphere006", true), scene.getObjectByName("Icosphere007", true), scene.getObjectByName("Icosphere008", true), scene.getObjectByName("Icosphere009", true)]);
 
   if(intersects.length > 0) {
@@ -316,7 +329,7 @@ function render() {
         $('html,body').css('cursor', 'default');
     }
 
-
+}
 
 }
 
@@ -326,6 +339,7 @@ function onClick(event) {
 pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
+if (kliknietopodpowiedz == 1) {
 var intersects = raycaster.intersectObjects([scene.getObjectByName("Icosphere", true), scene.getObjectByName("Icosphere001", true), scene.getObjectByName("Icosphere002", true), scene.getObjectByName("Icosphere003", true), scene.getObjectByName("Icosphere004", true), scene.getObjectByName("Icosphere005", true), scene.getObjectByName("Icosphere006", true), scene.getObjectByName("Icosphere007", true), scene.getObjectByName("Icosphere008", true), scene.getObjectByName("Icosphere009", true)]);
 
 
@@ -486,7 +500,7 @@ requestAnimationFrame( animate );
 
 }
 
-
+}
 
 
 };

@@ -30,6 +30,11 @@
 <audio src="audio/geometria/43a.ogg" id="teraz"></audio>
 <audio src="audio/geometria/45a.ogg" id="udalo"></audio>
 
+<div class="samouczek">
+W kwadracie o boku 2 znajduje się 5 losowo położonych punktów. Twoim zadaniem jest rozwiązanie zagadki, która wyświetli się po naciśnięciu kamiennego portalu. Przytrzymanie klawisza „Q” uruchamia widok z góry. Jeśli nie wiesz, jak rozwiązać to zadanie, możesz skorzystać z systemu podpowiedzi w lewym górnym rogu.
+<button id="przycisksamouczek" onclick="showPage()"><img id="play" src="img/play.png" alt="Graj"></button>
+</div>
+
   <div id="napisdialog1"></div>
 <div class="poledowpisywania">
 <p>Mamy pewność, że wśród 5 punktów w kwadracie o&nbsp;boku 2 znajdują się dwa odległe o nie więcej niż...</p>
@@ -44,6 +49,14 @@
 </div>
 
 <script>
+
+var kliknietopodpowiedz = 0;
+
+function showPage() {
+$(".samouczek").css("display", "none");
+kliknietopodpowiedz += 1;
+}
+
 var klikpodpowiedz = 0;
 
 if (klikpodpowiedz == 3) {
@@ -506,7 +519,7 @@ $(".poledowpisywania").css("display", "none");
         audio.play();
 audio.onended = function() {
   $("#napisdialog1").css("display", "none");
-window.location.href = "zasada3.html";
+window.location.href = "powrot.html";
 };
   } 
   if (isNaN(x) || x <= 0) {
@@ -582,6 +595,7 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
+if (kliknietopodpowiedz == 1) {
 	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube001", true), scene.getObjectByName("Cube002", true)]);
 
   if(intersects.length > 0) {
@@ -590,7 +604,7 @@ function render() {
         $('html,body').css('cursor', 'default');
     }
 
-
+}
 
 }
 
@@ -598,6 +612,7 @@ function onClick(event) {
 pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
+if (kliknietopodpowiedz == 1) {
   var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube001", true)]);
   if (intersects.length > 0) {
 
@@ -697,22 +712,22 @@ audio.onended = function() {
 $("#napisdialog1").css("display", "none"); 
 $("#przyciskpodpowiedz").css("display", "block"); 
 
-if (punktklon4.position.x <= -0.69 && punktklon4.position.z <= -1.07) {
-tl.to(punktklon4.position, { x: -0.68, z: -1.06 });
+if (punktklon4.position.x <= -0.63 && punktklon4.position.z <= -1.07) {
+tl.to(punktklon4.position, { x: -0.68, z: -1.08 });
 tl.set(plane5, { visible: true });
 }
 
-if (punktklon4.position.x >= -0.53 && punktklon4.position.z <= -1.07) {
-tl.to(punktklon4.position, { x: -0.52, z: -1.06 });
+if (punktklon4.position.x >= -0.55 && punktklon4.position.z <= -1.07) {
+tl.to(punktklon4.position, { x: -0.52, z: -1.08 });
 tl.set(plane6, { visible: true });
 }
 
-if (punktklon4.position.x <= -0.69 && punktklon4.position.z >= -0.925) {
+if (punktklon4.position.x <= -0.63 && punktklon4.position.z >= -0.91) {
 tl.to(punktklon4.position, { x: -0.68, z: -0.925 });
 tl.set(plane7, { visible: true });
 }
 
-if (punktklon4.position.x >= -0.53 && punktklon4.position.z >= -0.925) {
+if (punktklon4.position.x >= -0.55 && punktklon4.position.z >= -0.91) {
 tl.to(punktklon4.position, { x: -0.52, z: -0.925 });
 tl.set(plane8, { visible: true });
 }
@@ -734,7 +749,7 @@ $(".poledowpisywania").css("display", "flex");
 }
 
 }
-
+}
 
 window.addEventListener( "pointerdown", onClick );
 

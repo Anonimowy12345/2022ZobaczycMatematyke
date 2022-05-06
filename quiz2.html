@@ -22,6 +22,11 @@
 <audio src="audio/quiz/10.ogg" id="zle2"></audio>
 <audio src="audio/quiz/11a.ogg" id="zle3"></audio>
 
+<div class="samouczek">
+Twoim zadaniem jest ominięcie przeszkód w&nbsp;postaci skał. Steruj łódką za pomocą strzałek lub klawiszy A, D. Jeżeli uderzysz w jedną z&nbsp;przeszkód, nie obawiaj się - poprawna odpowiedź na pytanie dotyczące biografii Dirichleta przywróci cię do gry.
+<button id="przycisksamouczek" onclick="showPage()"><img id="play" src="img/play.png" alt="Graj"></button>
+</div>
+
   <div id="napisdialog1"></div>
 <div class="pytaniecontainer">
 
@@ -71,8 +76,12 @@
 
 <script>
 
+var kliknietopodpowiedz = 0;
 
-
+function showPage() {
+$(".samouczek").css("display", "none");
+kliknietopodpowiedz += 1;
+}
 
 var mySounds = [ 'zle1', 'zle2', 'zle3' ]
 function randomSound() {
@@ -694,7 +703,10 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
-	var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+
+if (kliknietopodpowiedz == 1) {
+var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
+
 
   if(intersects.length > 0) {
         $('html,body').css('cursor', 'zoom-in');
@@ -702,7 +714,7 @@ function render() {
         $('html,body').css('cursor', 'default');
     }
 
-
+}
 
 }
 
@@ -710,6 +722,7 @@ function onClick(event) {
 pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
+if (kliknietopodpowiedz == 1) {
 var intersects = raycaster.intersectObjects([scene.getObjectByName("Cube", true)]);
   if (intersects.length > 0) {
 
@@ -795,6 +808,8 @@ light2.position.x += 2.8;
 
 
 };
+
+}
 
   }
 }
