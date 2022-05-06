@@ -16,7 +16,8 @@
 <body>
 
 <audio id="audio" src="audio/6a.ogg"></audio>
-<audio src="audio/chybaniemaminnegowyboru.ogg" id="dialog1"></audio>
+<audio src="audio/koniec/47.ogg" id="dialog1"></audio>
+<audio src="audio/koniec/48.ogg" id="dialog2"></audio>
 
 <div class="samouczek">
 Światło pochodzące z portalu cię oślepia. Nie poddajesz się, cały czas idziesz do przodu z nadzieją, że uda ci&nbsp;się gdzieś trafić. Zamykasz oczy, a po ich otwarciu dostrzegasz swój pokój.
@@ -296,7 +297,7 @@ $("#napisdialog1").text("Zaraz, tej książki wcześniej tutaj nie było!");
 var sounds = document.getElementsByTagName('audio');
   for(i=0; i<sounds.length; i++) {sounds[i].pause(); sounds[i].currentTime = 0;}
 
-        var audio = document.getElementById("dialog1");
+        var audio = document.getElementById("dialog2");
         audio.play();
 audio.onended = function() {
   $("#napisdialog1").css("display", "none");

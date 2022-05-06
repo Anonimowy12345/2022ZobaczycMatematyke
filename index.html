@@ -15,7 +15,6 @@
 <body>
 
 <audio id="audio" src="audio/1.ogg"></audio>
-<audio src="audio/1b (1).mp3" id="dialog1"></audio>
 <audio src="audio/2.ogg" id="dialog2"></audio>
 <audio src="audio/3d.ogg" id="dialog3"></audio>
 <audio src="audio/4d.ogg" id="dialog4"></audio>
@@ -23,6 +22,11 @@
 <audio src="audio/tv1.ogg" id="tv1"></audio>
 <audio src="audio/tv2.ogg" id="tv2"></audio>
 <audio src="audio/tv3.ogg" id="tv3"></audio>
+
+<div class="startsamouczek">
+Przytrzymując prawy przycisk myszy, możesz obracać widok. Jeśli po wskazaniu myszą na dany przedmiot kursor zmienia się w ikonę lupy, oznacza to, że możesz wykonać z nim interakcję. Możesz tego dokonać, klikając na niego.
+<button id="przycisksamouczek" onclick="showPage2()"><img id="play" src="img/play.png" alt="Graj"></button>
+</div>
 
 <div id="wstep">
   <div id="tytul">ZASADA<br>SZUFLADKOWA<br>DIRICHLETA</div>
@@ -63,6 +67,7 @@
 
 
 <script>
+var kliknietopodpowiedz = 0;
 
 let INTERSECTED;
 
@@ -83,8 +88,13 @@ function myFunction3() {
     document.getElementById("przyciskpowrot").style.display = "none";
 }
 
-function showPage() {
+function showPage2() {
+$(".startsamouczek").css("display", "none");
+kliknietopodpowiedz += 1;
+}
 
+function showPage() {
+$(".startsamouczek").css("display", "flex");
 document.getElementById("wstep").style.display = "none";
 //document.getElementById("loader").style.display = "block";
 
@@ -277,6 +287,7 @@ function render() {
 	raycaster.setFromCamera( pointer, camera );
 
 	// calculate objects intersecting the picking ray
+if (kliknietopodpowiedz == 1) {
 	var intersects = raycaster.intersectObjects([scene.getObjectByName("lozko", true), scene.getObjectByName("Cube005", true), scene.getObjectByName("Cube010", true), scene.getObjectByName("regal", true), scene.getObjectByName("Cube006", true)]);
 
   if(intersects.length > 0) {
@@ -285,7 +296,7 @@ function render() {
         $('html,body').css('cursor', 'default');
     }
 
-
+}
 
 }
 
@@ -294,6 +305,7 @@ pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
   raycaster.setFromCamera(pointer, camera);
+if (kliknietopodpowiedz == 1) {
   var intersects = raycaster.intersectObjects([scene.getObjectByName("lozko", true)]);
   if (intersects.length > 0) {
    $("#napisdialog1").text("Nie chcę iść spać. Nie czuję się zmęczona.");
@@ -451,6 +463,7 @@ $("#przejscie").css("display", "block");
 
     }, 1200);
 
+}
 }
 }
 }

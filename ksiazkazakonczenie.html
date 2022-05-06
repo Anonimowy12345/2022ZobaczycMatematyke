@@ -37,7 +37,8 @@ background-attachment: fixed;">
 <div class="mySlideszakonczenie">
   <div id="podspodemtekst"><p><b>Teoria</b></p></div>
   <img id="zdjecieteoria1" src="img/teoria1.jpg" alt="Zrzut ekranu z gry umieszczonej na stronie">
-  <div id="podspodemtekst4"><p>Jeśli umieścimy więcej niż <i>n</i> przedmiotów w <i>n</i> szufladach, to przynajmniej w jednej szufladzie znajdzie się więcej niż jeden przedmiot.</p></div>
+   <div id="zasadatekst"><b>Zasada szufladkowa Dirichleta</b></div>
+  <div id="podspodemtekst4"><p>Jeśli umieścimy więcej niż <i>n</i> przedmiotów w&nbsp;<i>n</i>&nbsp;szufladach, to przynajmniej w jednej szufladzie&nbsp;znajdzie się więcej niż jeden przedmiot.</p></div>
 
 </div>
 
@@ -51,27 +52,28 @@ background-attachment: fixed;">
   <p>Dzielimy kwadrat o boku 2 na cztery mniejsze kwadraty o boku 1. Są one odpowiednikiem szufladek, a punkty - przedmiotów. Skoro powstałych kwadratów jest 4, punktów zaś 5, przynajmniej na jednym kwadracie znajdzie się więcej niż jeden punkt. Najdłuższym odcinkiem w kwadracie jest jego przekątna, więc mamy pewność, że co najmniej dwa punkty są od siebie odległe o nie więcej niż długość przekątnej kwadratu o boku 1.</p></div>
 
 <div class="mySlideszakonczenie">
-  <p>W 1823 roku generał Maximilien Foy zatrudnił go jako korepetytora, który uczył jego dzieci języka niemieckiego. Wynagrodzenie pozwoliło Dirichletowi uniezależnić się od wsparcia finansowego rodziców.</p>
+<div id="podspodemtekst"><p><b>Zadania do samodzielnego rozwiązania</b></p></div>
+  <p>Na odcinku o długości 2 m narysowano dziewięć różnych punktów. Udowodnij, że co najmniej dwa z tych punktów są od siebie oddalone o nie więcej niż 25&nbsp;cm.</p>
 </div>
 
 <div class="mySlideszakonczenie">
-  <p>Niestety, generał zmarł dwa lata później. Dirichlet od 1827 roku prowadził wykłady we&nbsp;Wrocławiu. Napotkał jednak ten sam problem, który spowodował, że wybrał naukę w&nbsp;Paryżu – poziom uniwersytetu był niski. Dirichlet przeniósł się do Berlina, gdzie został profesorem. Nie był on jednak z&nbsp;tego w pełni zadowolony. Natłok obowiązków, które na niego spadły, ograniczał czas, który mógł poświęcić na badania.</p>
+<div id="podspodemtekst"><p><b>Zadania do samodzielnego rozwiązania</b></p></div>
+  <p>W sześcianie o krawędzi 2 leży dziewięć punktów. Udowodnij, że wśród nich znajdują się dwa punkty odległe od siebie o nie więcej niż &#8730;3.</p>
 </div>
 
 <div class="mySlideszakonczenie">
-  <p>W 1829 roku Dirichlet poznał matematyka, Carla Jacobiego. Po pewnym czasie zostali bliskimi przyjaciółmi i wspierali się nawzajem w&nbsp;swoich badaniach. W 1843 roku Jacobi zachorował. Lekarz poradził mu, by wybrał się do Włoch, gdzie będzie mógł dojść do siebie. Dirichlet dołączył do niego w podróży.</p>
+<div id="podspodemtekst"><p><b>Zadania do samodzielnego rozwiązania</b></p></div>
+  <p>Wykaż, że w grupie 13 osób co najmniej dwie urodziły się w tym samym miesiącu.</p>
 </div>
 
 <div class="mySlideszakonczenie">
-  <p>W 1855 roku Dirichlet otrzymał stanowisko na uniwersytecie w Getyndze. Dzięki nowej pracy, miał on więcej czasu na badania i&nbsp;mógł nawiązać kontakt z&nbsp;naukowcami nowego pokolenia.</p>
+<div id="podspodemtekst"><p><b>Zadania do samodzielnego rozwiązania</b></p></div>
+  <p>Klasa 3B liczy 27 osób. Uzasadnij stwierdzenie, że przynajmniej dwie z&nbsp;nich mają taką samą liczbę znajomych z klasy.</p>
 </div>
 
 <div class="mySlideszakonczenie">
-  <p>Niestety, nie mógł się nacieszyć nią zbyt długo. Latem 1858 roku, podczas podróży do Szwajcarii, Dirichlet doznał zawału serca. Zmarł 
-</div>
-
-<div class="mySlideszakonczenie" style="background-color: #a49b84; box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);">
-
+<div id="podspodemtekst"><p><b>Podziękowania</b></p></div>
+  <p>Serdeczne podziękowania dla pana Daniela Danieluka za wsparcie merytoryczne oraz <a href="https://www.youtube.com/c/CarmelaGames">Carmeli</a> za użyczenie swojego głosu.</p>
 </div>
 
 <div class="mySlideszakonczenie" style="background-color: #a49b84; box-shadow: inset 0 0 20px 2px #282a2d, 0px 0px 24px 0px rgba(0, 0, 0, 1);">
@@ -118,12 +120,18 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "flex"; 
 if (slideIndex === 1) {
 document.getElementsByClassName('prev')[0].style.display="none";
+document.getElementsByClassName('next')[0].style.display="block";
 }
 if (slideIndex === 2) {
 document.getElementsByClassName('prev')[0].style.display="block";
+document.getElementsByClassName('next')[0].style.display="block";
 }
-if (slideIndex === 12) {
-document.getElementsByClassName('prev')[0].style.display="none";
+if (slideIndex === 10) {
+document.getElementsByClassName('prev')[0].style.display="block";
+document.getElementsByClassName('next')[0].style.display="block";
+}
+if (slideIndex === 11) {
+document.getElementsByClassName('prev')[0].style.display="block";
 document.getElementsByClassName('next')[0].style.display="none";
 }
 
